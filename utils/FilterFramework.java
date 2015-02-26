@@ -1,4 +1,4 @@
-package sample;
+package utils;
 /******************************************************************************************************************
  * File:FilterFramework.java
  * Course: 17655
@@ -63,8 +63,7 @@ public class FilterFramework extends Thread {
 
 	public class PipeIn {
 
-		public PipedInputStream InputReadPort = new PipedInputStream();
-
+		PipedInputStream inputReadPort =  new PipedInputStream();
 		// The following reference to a filter is used because java pipes are
 		// able to reliably
 		// detect broken pipes on the input port of the filter. This variable
@@ -73,7 +72,7 @@ public class FilterFramework extends Thread {
 		// has closed its
 		// output pipe and will send no more data.
 
-		public FilterFramework InputFilter;
+		public FilterFramework inputFilter;
 
 		/***************************************************************************
 		 * CONCRETE METHOD:: Connect Purpose: This method connects filters to
@@ -93,9 +92,9 @@ public class FilterFramework extends Thread {
 			try {
 				// Connect this filter's input to the upstream pipe's output
 				// stream
-
-				InputReadPort.connect(pipeOut.OutputWritePort);
-				InputFilter = filter;
+				
+				inputReadPort.connect(pipeOut.outputWritePort);
+				inputFilter = filter;
 
 			} // try
 
@@ -141,7 +140,7 @@ public class FilterFramework extends Thread {
 			 ***********************************************************************/
 
 			try {
-				while (InputReadPort.available() == 0) {
+				while (inputReadPort.available() == 0) {
 					if (EndOfInputStream()) {
 						throw new EndOfStreamException(
 								"End of input stream reached");
@@ -171,7 +170,7 @@ public class FilterFramework extends Thread {
 			 ***********************************************************************/
 
 			try {
-				datum = (byte) InputReadPort.read();
+				datum = (byte)inputReadPort.read();
 				return datum;
 
 			} // try
@@ -203,7 +202,7 @@ public class FilterFramework extends Thread {
 		 ****************************************************************************/
 
 		private boolean EndOfInputStream() {
-			if (InputFilter.isAlive()) {
+			if (inputFilter.isAlive()) {
 				return false;
 
 			} else {
@@ -228,7 +227,7 @@ public class FilterFramework extends Thread {
 
 		public void closePort() {
 			try {
-				InputReadPort.close();
+				inputReadPort.close();
 
 			} catch (Exception Error) {
 				System.out.println("\n" + this + " ClosePorts error::" + Error);
@@ -241,8 +240,8 @@ public class FilterFramework extends Thread {
 
 	public class PipeOut {
 
-		public PipedOutputStream OutputWritePort = new PipedOutputStream();
-
+		PipedOutputStream outputWritePort = new PipedOutputStream();
+		
 		/***************************************************************************
 		 * CONCRETE METHOD:: WriteFilterOutputPort Purpose: This method writes
 		 * data to the output port one byte at a time.
@@ -258,13 +257,12 @@ public class FilterFramework extends Thread {
 
 		public void WriteFilterOutputPort(byte datum) {
 			try {
-				OutputWritePort.write((int) datum);
-				OutputWritePort.flush();
-
+	            outputWritePort.write((int) datum );
+			   	outputWritePort.flush();
 			} // try
 
 			catch (Exception Error) {
-				System.out.println("\n" + this + " Pipe write error::" + Error);
+				System.out.println("\n" + this + " Pipe write error: " + Error);
 
 			} // catch
 
@@ -287,7 +285,7 @@ public class FilterFramework extends Thread {
 
 		public void closePort() {
 			try {
-				OutputWritePort.close();
+				outputWritePort.close();
 			} catch (Exception Error) {
 				System.out.println("\n" + this + " ClosePorts error::" + Error);
 
@@ -312,6 +310,10 @@ public class FilterFramework extends Thread {
 	 ****************************************************************************/
 
 	public class EndOfStreamException extends Exception {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 
 		EndOfStreamException() {
 			super();
@@ -323,6 +325,10 @@ public class FilterFramework extends Thread {
 
 	} // class
 
+
+
+	
+	
 	/***************************************************************************
 	 * CONCRETE METHOD:: run Purpose: This is actually an abstract method
 	 * defined by Thread. It is called when the thread is started by calling the

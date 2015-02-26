@@ -1,9 +1,6 @@
 /FilterFramework$EndOfStreamException.class
+/FilterFramework$Field.class
 /FilterFramework$PipeIn.class
 /FilterFramework$PipeOut.class
 /FilterFramework.class
-/MiddleFilter.class
-/Plumber.class
-/SinkFilter.class
-/SourceFilter.class
-/generator.class
+/Field.class

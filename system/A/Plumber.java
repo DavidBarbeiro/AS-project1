@@ -1,5 +1,5 @@
-package SystemC;
-import sample.FilterFramework;
+package system.A;
+import utils.FilterFramework;
 /******************************************************************************************************************
  * File:Plumber.java Course: 17655 Project: Assignment 1 Copyright: Copyright
  * (c) 2003 Carnegie Mellon University Versions: 1.0 November 2008 - Sample Pipe
@@ -25,9 +25,10 @@ public class Plumber {
 		 * Here we instantiate three filters.
 		 ****************************************************************************/
 
-		SourceFilter filter1 = new SourceFilter();
-		MiddleFilter filter2 = new MiddleFilter();
-		SinkFilter filter3 = new SinkFilter();
+		SourceFilter source = new SourceFilter();
+		TemperatureFilter temperatureFilter = new TemperatureFilter();
+		AltitudeFilter altitudeFilter = new AltitudeFilter();
+		SinkFilter sink = new SinkFilter();
 
 		/****************************************************************************
 		 * Here we connect the filters starting with the sink filter (Filter 1)
@@ -35,19 +36,21 @@ public class Plumber {
 		 * Filter2 to the source filter (Filter3).
 		 ****************************************************************************/
 
-		filter3.Connect(filter2);// This esstially says, "connect Filter3 input
-									// port to Filter2 output port
-		filter2.Connect(filter1);// This esstially says, "connect Filter2 intput
-									// port to Filter1 output port
+		sink.Connect(altitudeFilter);
+		sink.Connect(temperatureFilter);
+		temperatureFilter.Connect(source);
+		altitudeFilter.Connect(source);
 
 		/****************************************************************************
 		 * Here we start the filters up. All-in-all,... its really kind of
 		 * boring.
 		 ****************************************************************************/
+		source.start();
+		altitudeFilter.start();
+		temperatureFilter.start();
+		sink.start();
 
-		filter1.start();
-		filter2.start();
-		filter3.start();
+
 
 	} // main
 

@@ -1,4 +1,5 @@
-package SystemC;
+package system.A;
+
 /******************************************************************************************************************
  * File:SourceFilter.java
  * Course: 17655
@@ -20,7 +21,7 @@ package SystemC;
 
 import java.io.*; // note we must add this here since we use BufferedReader class to read from the keyboard
 
-import sample.FilterFramework;
+import utils.FilterFramework;
 
 public class SourceFilter extends FilterFramework {
 
@@ -41,19 +42,15 @@ public class SourceFilter extends FilterFramework {
 			System.out.println("\n" + this.getName()
 					+ "::Source reading file...");
 
-			/***********************************************************************************
-			 * Here we read the data from the file and send it out the filter's
-			 * output port one byte at a time. The loop stops when it encounters
-			 * an EOFExecption.
-			 ***********************************************************************************/
-
-			while (true) {
+			while(true){
 				databyte = in.readByte();
 				bytesread++;
-				listPipeOut.get("MiddleFilter").WriteFilterOutputPort(databyte);
+				
+				listPipeOut.get("TemperatureFilter").WriteFilterOutputPort(databyte);
 				byteswritten++;
-
-			} // while
+				listPipeOut.get("AltitudeFilter").WriteFilterOutputPort(databyte);
+				byteswritten++;
+			} //while
 
 		} // try
 
@@ -68,7 +65,8 @@ public class SourceFilter extends FilterFramework {
 					+ "::End of file reached...");
 			try {
 				in.close();
-				listPipeOut.get("MiddleFilter").closePort();
+				listPipeOut.get("AltitudeFilter").closePort();
+				listPipeOut.get("TemperatureFilter").closePort();
 				System.out.println("\n" + this.getName()
 						+ "::Read file complete, bytes read::" + bytesread
 						+ " bytes written: " + byteswritten);
@@ -87,7 +85,7 @@ public class SourceFilter extends FilterFramework {
 		} // catch
 
 		/***********************************************************************************
-		 * The following exception is raised should we have a problem openinging
+		 * The following exception is raised should we have a problem opening
 		 * the file.
 		 ***********************************************************************************/
 
