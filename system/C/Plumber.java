@@ -1,4 +1,4 @@
-package SystemB;
+package system.C;
 
 /******************************************************************************************************************
  * File:Plumber.java Course: 17655 Project: Assignment 1 Copyright: Copyright
@@ -25,10 +25,9 @@ public class Plumber {
 		 * Here we instantiate three filters.
 		 ****************************************************************************/
 
-		SourceFilter source = new SourceFilter();
-		TemperatureFilter temperatureFilter = new TemperatureFilter();
-		AltitudeFilter altitudeFilter = new AltitudeFilter();
-		PressureFilter pressureFilter = new PressureFilter();
+		SourceA sourceA = new SourceA();
+		SourceB sourceB = new SourceB();
+		SortFilter sort = new SortFilter();
 		SinkFilter sink = new SinkFilter();
 
 		/****************************************************************************
@@ -37,23 +36,19 @@ public class Plumber {
 		 * Filter2 to the source filter (Filter3).
 		 ****************************************************************************/
 
-		sink.Connect(altitudeFilter);
-		sink.Connect(temperatureFilter);
-		sink.Connect(pressureFilter);
-		temperatureFilter.Connect(source);
-		altitudeFilter.Connect(source);
-		pressureFilter.Connect(source);
+		sink.Connect(sort);
+		sort.Connect(sourceA);
+		sort.Connect(sourceB);
+		
 
 		/****************************************************************************
 		 * Here we start the filters up. All-in-all,... its really kind of
 		 * boring.
 		 ****************************************************************************/
-		source.start();
-		altitudeFilter.start();
-		temperatureFilter.start();
-		pressureFilter.start();
+		sourceA.start();
+		sourceB.start();
+		sort.start();
 		sink.start();
-
 	} // main
 
 } // Plumber

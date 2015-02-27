@@ -1,8 +1,7 @@
-package SystemB;
+package system.B;
 
 import java.nio.ByteBuffer;
 
-import utils.FilterFramework;
 import utils.FilterFramework.EndOfStreamException;
 import utils.FilterFramework.PipeIn;
 import utils.FilterFramework.PipeOut;

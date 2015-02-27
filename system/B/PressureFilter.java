@@ -1,4 +1,4 @@
-package SystemB;
+package system.B;
 
 import java.util.ArrayList;
 import utils.FilterFramework;

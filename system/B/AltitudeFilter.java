@@ -1,4 +1,4 @@
-package SystemB;
+package system.B;
 
 import system.A.Field;
 import utils.FilterFramework;

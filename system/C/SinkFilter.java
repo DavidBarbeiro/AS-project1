@@ -1,4 +1,4 @@
-package SystemB;
+package system.C;
 import utils.FilterFramework;
 
 /******************************************************************************************************************
@@ -50,60 +50,16 @@ public class SinkFilter extends FilterFramework {
 
 		System.out.print("\n" + this.getName() + "::Sink Reading ");
 		
-		
-		boolean temperatureFlag=true;
-		boolean altitudeFlag=true;
-		boolean pressureFlag=true;
-		Field temperatureField=new Field();
-		Field altitudeField=new Field();
-		Field pressureField=new Field();
-		String row="";
-		
 		while (true) {
-			if( temperatureFlag==true){
-				try {
-					temperatureField.unmarshal(listPipeIn.get("TemperatureFilter"));
-				} catch (EndOfStreamException e) {
-					temperatureFlag=false;
-					listPipeIn.get("TemperatureFilter").closePort();
-				}
-			}
-			if( altitudeFlag==true){
-				try {
-					altitudeField.unmarshal(listPipeIn.get("AltitudeFilter"));
-				} catch (EndOfStreamException e) {
-					altitudeFlag=false;
-					listPipeIn.get("AltitudeFilter").closePort();
-				}
-			}
-			if( pressureFlag==true){
-				try {
-					pressureField.unmarshal(listPipeIn.get("PressureFilter"));
-				} catch (EndOfStreamException e) {
-					pressureFlag=false;
-					listPipeIn.get("PressureFilter").closePort();
-				}
-			}
-			
-			if(!temperatureFlag && !altitudeFlag && !pressureFlag){
-				System.out.print( "\n" + this.getName() + "::Sink Exiting;" );
+			Field field = new Field();
+			try {
+				field.unmarshal(listPipeIn.get("SortFilter"));
+				timeStamp.setTimeInMillis(field.measurement);
+				System.out.println(timeStampFormat.format(timeStamp.getTime()));
+			} catch (EndOfStreamException e) {
+				listPipeIn.get("SortFilter").closePort();
 				break;
 			}
-
-			if(pressureField.id==0){
-				row="\n";
-				timeStamp.setTimeInMillis(pressureField.measurement);
-				row+="Timestamp: " + timeStampFormat.format(timeStamp.getTime());
-			}else{
-				row+=" temperature: "+ Double.longBitsToDouble(temperatureField.measurement);
-				row+=" altitude: " + Double.longBitsToDouble(altitudeField.measurement);
-				row+=" pressure: " + Double.longBitsToDouble(pressureField.measurement);
-				if(pressureField.id<0){
-					row+=" *";
-				}
-				System.out.println(row);
-			}
-
 
 		} // while
 		
