@@ -1,6 +1,8 @@
 package system.B;
 
 import java.util.ArrayList;
+
+import utils.Field;
 import utils.FilterFramework;
 /******************************************************************************************************************
  * File:MiddleFilter.java Course: 17655 Project: Assignment 1 Copyright:
@@ -56,6 +58,7 @@ public class PressureFilter extends FilterFramework {
 								isFirst=false;
 								for (int i=0; i<wildpoints.size();i++) {
 									Field wildpoint=wildpoints.get(i);
+									wildpoint.marshal(listPipeOut.get("SinkWildpoints"));
 									if(wildpoint.id==3){
 										wildpoint.measurement = Double.doubleToLongBits(lastValidPoint);
 										wildpoint.id*=-1;
@@ -68,6 +71,7 @@ public class PressureFilter extends FilterFramework {
 								double mean=(field.measurement+lastValidPoint)/2;
 								for (int i=0; i<wildpoints.size();i++) {
 									Field wildpoint=wildpoints.get(i);
+									wildpoint.marshal(listPipeOut.get("SinkWildpoints"));
 									if(wildpoint.id==3){
 										wildpoint.measurement=Double.doubleToLongBits(mean);
 										wildpoint.id*=-1;
@@ -89,6 +93,7 @@ public class PressureFilter extends FilterFramework {
 		{
 			for (int i=0; i<wildpoints.size();i++) {
 				Field wildpoint=wildpoints.get(i);
+				wildpoint.marshal(listPipeOut.get("SinkWildpoints"));
 				if(wildpoint.id==3){
 					wildpoint.measurement = Double.doubleToLongBits(lastValidPoint);
 					wildpoint.id*=-1;
@@ -100,6 +105,7 @@ public class PressureFilter extends FilterFramework {
 			
 			listPipeIn.get("SourceFilter").closePort();
 			listPipeOut.get("SinkFilter").closePort();
+			listPipeOut.get("SinkWildpoints").closePort();
 			System.out.print("\n" + this.getName() + "::Pressure Exiting; bytes read: " 
 			+ bytesread + " bytes written: " + byteswritten);
 

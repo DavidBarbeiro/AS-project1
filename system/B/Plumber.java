@@ -29,6 +29,7 @@ public class Plumber {
 		TemperatureFilter temperatureFilter = new TemperatureFilter();
 		AltitudeFilter altitudeFilter = new AltitudeFilter();
 		PressureFilter pressureFilter = new PressureFilter();
+		SinkWildpoints wildpointsFilter = new SinkWildpoints();
 		SinkFilter sink = new SinkFilter();
 
 		/****************************************************************************
@@ -40,6 +41,7 @@ public class Plumber {
 		sink.Connect(altitudeFilter);
 		sink.Connect(temperatureFilter);
 		sink.Connect(pressureFilter);
+		wildpointsFilter.Connect(pressureFilter);
 		temperatureFilter.Connect(source);
 		altitudeFilter.Connect(source);
 		pressureFilter.Connect(source);
@@ -52,6 +54,7 @@ public class Plumber {
 		altitudeFilter.start();
 		temperatureFilter.start();
 		pressureFilter.start();
+		wildpointsFilter.start();
 		sink.start();
 
 	} // main

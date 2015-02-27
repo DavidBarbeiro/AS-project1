@@ -36,7 +36,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat; // This class is used to format and write time in a string format.
 
-public class SinkFilter extends FilterFramework {
+public class SinkWildpoints extends FilterFramework {
 
 	public void run() {
 		/************************************************************************************
@@ -53,81 +53,54 @@ public class SinkFilter extends FilterFramework {
 		 * First we announce to the world that we are alive...
 		 **************************************************************/
 
-		System.out.print("\n" + this.getName() + "::Sink Reading ");
+		System.out.print("\n" + this.getName() + "::Wildpoints Sink Reading ");
 
-		boolean temperatureFlag = true;
-		boolean altitudeFlag = true;
-		boolean pressureFlag = true;
-		Field temperatureField = new Field();
-		Field altitudeField = new Field();
-		Field pressureField = new Field();
+		boolean wildPointsFlag = true;
+		Field wildPointField = new Field();
 		String row = "";
 
 		try {
-			File outputB = new File("OutputB.dat");
+			File wildpoints = new File("WildPoints.dat");
 
 			// if file doesnt exists, then create it
-			if (!outputB.exists()) {
-				outputB.createNewFile();
+			if (!wildpoints.exists()) {
+				wildpoints.createNewFile();
 			}
 
-			FileWriter fwOutputB = new FileWriter(outputB.getAbsoluteFile());
-			BufferedWriter bwOutputB = new BufferedWriter(fwOutputB);
+			FileWriter fwWildpoints = new FileWriter(
+					wildpoints.getAbsoluteFile());
+			BufferedWriter bwWildpoints = new BufferedWriter(fwWildpoints);
 
 			while (true) {
-				if (temperatureFlag == true) {
+				if (wildPointsFlag == true) {
 					try {
-						temperatureField.unmarshal(listPipeIn
-								.get("TemperatureFilter"));
-					} catch (EndOfStreamException e) {
-						temperatureFlag = false;
-						listPipeIn.get("TemperatureFilter").closePort();
-					}
-				}
-				if (altitudeFlag == true) {
-					try {
-						altitudeField.unmarshal(listPipeIn
-								.get("AltitudeFilter"));
-					} catch (EndOfStreamException e) {
-						altitudeFlag = false;
-						listPipeIn.get("AltitudeFilter").closePort();
-					}
-				}
-				if (pressureFlag == true) {
-					try {
-						pressureField.unmarshal(listPipeIn
+						wildPointField.unmarshal(listPipeIn
 								.get("PressureFilter"));
 					} catch (EndOfStreamException e) {
-						pressureFlag = false;
+						wildPointsFlag = false;
 						listPipeIn.get("PressureFilter").closePort();
 					}
 				}
 
-				if (!temperatureFlag && !altitudeFlag && !pressureFlag) {
-					System.out.print("\n" + this.getName() + "::Sink Exiting;");
+				if (!wildPointsFlag) {
+					System.out.print("\n" + this.getName()
+							+ "::Wildpoints Sink Exiting;");
 					break;
 				}
 
-				if (pressureField.id == 0) {
+				if(wildPointField.id==0){
 					row = "";
-					timeStamp.setTimeInMillis(pressureField.measurement);
+					timeStamp.setTimeInMillis(wildPointField.measurement);
 					row += "Timestamp: "
 							+ timeStampFormat.format(timeStamp.getTime());
-				} else {
-					row += " temperature: "
-							+ Double.longBitsToDouble(temperatureField.measurement);
-					row += " altitude: "
-							+ Double.longBitsToDouble(altitudeField.measurement);
-					row += " pressure: "
-							+ Double.longBitsToDouble(pressureField.measurement);
-					if (pressureField.id < 0) {
-						row += " *";
-					}
-					bwOutputB.write(row+"\n");
-					System.out.println(row);
+				}else{
+					row += " Pressure: "
+							+ Double.longBitsToDouble(wildPointField.measurement);
+					bwWildpoints.write(row + "\n");
 				}
+				
 			} // while
-			bwOutputB.close();
+			bwWildpoints.close();
 		} catch (IOException e) {
 			System.out.println("IO exception: some problem with file creation");
 			e.printStackTrace();

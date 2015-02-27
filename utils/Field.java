@@ -1,14 +1,13 @@
-package system.A;
+package utils;
 
 import java.nio.ByteBuffer;
 
-import utils.FilterFramework;
 import utils.FilterFramework.EndOfStreamException;
 import utils.FilterFramework.PipeIn;
 import utils.FilterFramework.PipeOut;
 
 public class Field{
-
+	//if id is negative it means that this Field is a wildpoint
 	public int id;
 	public long measurement;
 	
@@ -25,7 +24,9 @@ public class Field{
 	}
 	
 
-
+	/****************************************************************************
+	 * // This method reads from PipeIn and decomutes the ID and Measurement
+	 *****************************************************************************/
 	public void unmarshal(PipeIn pipeIn) throws EndOfStreamException  {
 		
 		int MeasurementLength = 8; // This is the length of all measurements
@@ -107,11 +108,14 @@ public class Field{
 
 	}
 	
+	/****************************************************************************
+	 * // This method allocates two byte arrays in which the id and measurement
+	 * are stored. Then, those bytes are sent to the right filter using PipeOut
+	 *****************************************************************************/
 	
 	public void marshal(PipeOut pipeOut){
 		byte[] array1 = ByteBuffer.allocate(4).putInt(this.id).array();
 		byte[] array2 = ByteBuffer.allocate(8).putLong(this.measurement).array();
-		
 		
 		for (byte b : array1) {
 			pipeOut.WriteFilterOutputPort(b);
