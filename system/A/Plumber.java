@@ -1,18 +1,11 @@
 package system.A;
 
 /******************************************************************************************************************
- * File:Plumber.java Course: 17655 Project: Assignment 1 Copyright: Copyright
- * (c) 2003 Carnegie Mellon University Versions: 1.0 November 2008 - Sample Pipe
- * and Filter code (ajl).
- *
+ * File:Plumber.java
  * Description:
  *
- * This class serves as an example to illstrate how to use the PlumberTemplate
- * to create a main thread that instantiates and connects a set of filters. This
- * example consists of three filters: a source, a middle filter that acts as a
- * pass-through filter (it does nothing to the data), and a sink filter which
- * illustrates all kinds of useful things that you can do with the input stream
- * of data.
+ * This class serves instantiates and connects a set of four filters: a source, an altitude filter, a temperature filter 
+ * and a sink filter
  *
  * Parameters: None
  *

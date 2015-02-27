@@ -5,9 +5,6 @@ package system.A;
 import utils.Field;
 import utils.FilterFramework;
 
-
-
-
 /******************************************************************************************************************
  * File:SinkFilter.java
  * Course: 17655
@@ -18,14 +15,7 @@ import utils.FilterFramework;
  *
  * Description:
  *
- * This class serves as an example for using the SinkFilterTemplate for creating a sink filter. This particular
- * filter reads some input from the filter's input port and does the following:
- *
- *	1) It parses the input stream and "decommutates" the measurement ID
- *	2) It parses the input steam for measurments and "decommutates" measurements, storing the bits in a long word.
- *
- * This filter illustrates how to convert the byte stream data from the upstream filterinto useable data found in
- * the stream: namely time (long type) and measurements (double type).
+ * This class receives information from the filters and produces an output
  *
  *
  * Parameters: 	None

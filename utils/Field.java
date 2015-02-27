@@ -6,6 +6,24 @@ import utils.FilterFramework.EndOfStreamException;
 import utils.FilterFramework.PipeIn;
 import utils.FilterFramework.PipeOut;
 
+/******************************************************************************************************************
+ * File:Field.java
+ *
+ * Description:
+ *
+ * This class represents the atomic structure that flows through the pipeline: a Field represented by an ID
+ * and a measurement. We thought of two options: we could make this class serializable and send each field
+ * as an object, or we could make two methods, marshal and unmarshal, to send data as bytes and commute and decommute
+ * the id and measurement. We chose the second option because this way we could send the information as bytes
+ * to a system in a different language. With serialized objects that would be impossible, because those objects are specific
+ * to the java language.
+ *
+ * Parameters: None
+ *
+ * Internal Methods: None
+ *
+ ******************************************************************************************************************/
+
 public class Field{
 	//if id is negative it means that this Field is a wildpoint
 	public int id;

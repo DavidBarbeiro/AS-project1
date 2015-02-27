@@ -23,6 +23,20 @@ import java.io.*; // note we must add this here since we use BufferedReader clas
 
 import utils.FilterFramework;
 
+/******************************************************************************************************************
+* File:SourceFilter.java
+
+* Description:
+*
+* This class is used to read data from a file and stream it to the respective filters that were connected using the plumber
+*
+* Parameters: 		None
+*
+* Internal Methods:
+*
+*	public void run() - this method must be overridden by this class.
+*
+******************************************************************************************************************/
 public class SourceFilter extends FilterFramework {
 
 	public void run() {

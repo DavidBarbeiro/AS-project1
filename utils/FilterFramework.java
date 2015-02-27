@@ -38,15 +38,35 @@ package utils;
 import java.io.*;
 import java.util.HashMap;
 
+/******************************************************************************************************************
+ * File:FilterFramework.java
+ *
+ * Description:
+ *
+ * This class has all the basic login of every Filter. It allows the plumber to connect different filters.
+ * Each Filter might connect or be connected to any number of Filters. We do this by having a HashMap of PipeIn
+ * and PipeOut. Their keys are the name of the class that represent other Filters, to promote intuitiveness.
+ * Every different Filter must have it's own Class with a unique name. If that could be a problem, an alternative
+ * would be to have a variable to store the Filter name (which would also be unique) and use that name instead of the name
+ * of the class. This would be usefull if we had more than one instance of the class in the system.
+ * With the current solution, this cant be done of a Filter is connected to two instances of the same class, because
+ * an HashMap can't have repeated keys.
+ *
+ * Parameters: None
+ *
+ * Internal Methods: None
+ *
+ ******************************************************************************************************************/
 public class FilterFramework extends Thread {
-	// Maps how the pipes are connected to this Filter
+	// Maps how the pipes are connected to this Filter.
 	protected HashMap<String, PipeIn> listPipeIn = new HashMap<String, PipeIn>();
 	protected HashMap<String, PipeOut> listPipeOut = new HashMap<String, PipeOut>();
 
 	public FilterFramework() {
 		// TODO Auto-generated constructor stub
 	}
-
+	
+	//This method is used to connect the argument Filter to this Filter 
 	public void Connect(FilterFramework filter) {
 		PipeOut pipeOut = new PipeOut();
 		PipeIn pipeIn = new PipeIn();
@@ -55,14 +75,22 @@ public class FilterFramework extends Thread {
 		pipeIn.Connect(pipeOut, filter);
 		// we add the new instance of pipeOut to the HashMap of filter, and add
 		// the new instance of PipeIn to the HashMap of this. The keys are used
-		// to know how is the data flowing (where is it coming from or where is
+		// to know how is the data flowing (where is it coming from and where is
 		// it going to)
+		
+		//we map it by using the Class name
 		filter.listPipeOut.put(this.getClass().getSimpleName(), pipeOut);
 		listPipeIn.put(filter.getClass().getSimpleName(), pipeIn);
 	}
 
+	
+	
+	//Since a FilterFramework might have different PipedInputStream, we created the class
+	//PipeIn that is instantiated every thime the Plumber.java makes a Connection
 	public class PipeIn {
-
+		//IMPORTANT FOR SYSTEM B!!! PipedInputStream must have a buffer of at least the size of the dataset (6000 bytes in this example)
+		//to make sure deadlocks don't happen. If the buffer is too small, deadlocks may occur when there is a huge sequence of wildpoints.
+		
 		PipedInputStream inputReadPort =  new PipedInputStream(6000);
 		// The following reference to a filter is used because java pipes are
 		// able to reliably

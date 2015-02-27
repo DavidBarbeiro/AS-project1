@@ -3,16 +3,12 @@ package system.A;
 import utils.Field;
 import utils.FilterFramework;
 /******************************************************************************************************************
- * File:MiddleFilter.java Course: 17655 Project: Assignment 1 Copyright:
- * Copyright (c) 2003 Carnegie Mellon University Versions: 1.0 November 2008 -
- * Sample Pipe and Filter code (ajl).
+ * File:AltitudeFilter.java
  *
  * Description:
  *
- * This class serves as an example for how to use the FilterRemplate to create a
- * standard filter. This particular example is a simple "pass-through" filter
- * that reads data from the filter's input port and writes data out the filter's
- * output port.
+ * This class serves as a filter of timestamps and altitude fields (id 0 and 2). It also converts feet to meters before
+ * sending the stream to the sink filter
  *
  * Parameters: None
  *
