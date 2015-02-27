@@ -1,5 +1,6 @@
-package system.A;
+package SystemB;
 
+import system.A.Field;
 import utils.FilterFramework;
 /******************************************************************************************************************
  * File:MiddleFilter.java Course: 17655 Project: Assignment 1 Copyright:

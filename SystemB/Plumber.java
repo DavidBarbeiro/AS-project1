@@ -1,4 +1,4 @@
-package system.A;
+package SystemB;
 
 /******************************************************************************************************************
  * File:Plumber.java Course: 17655 Project: Assignment 1 Copyright: Copyright
@@ -28,6 +28,7 @@ public class Plumber {
 		SourceFilter source = new SourceFilter();
 		TemperatureFilter temperatureFilter = new TemperatureFilter();
 		AltitudeFilter altitudeFilter = new AltitudeFilter();
+		PressureFilter pressureFilter = new PressureFilter();
 		SinkFilter sink = new SinkFilter();
 
 		/****************************************************************************
@@ -38,8 +39,10 @@ public class Plumber {
 
 		sink.Connect(altitudeFilter);
 		sink.Connect(temperatureFilter);
+		sink.Connect(pressureFilter);
 		temperatureFilter.Connect(source);
 		altitudeFilter.Connect(source);
+		pressureFilter.Connect(source);
 
 		/****************************************************************************
 		 * Here we start the filters up. All-in-all,... its really kind of
@@ -48,9 +51,8 @@ public class Plumber {
 		source.start();
 		altitudeFilter.start();
 		temperatureFilter.start();
+		pressureFilter.start();
 		sink.start();
-
-
 
 	} // main
 

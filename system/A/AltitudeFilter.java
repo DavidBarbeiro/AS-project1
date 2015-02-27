@@ -1,6 +1,5 @@
 package system.A;
 
-import utils.Field;
 import utils.FilterFramework;
 /******************************************************************************************************************
  * File:MiddleFilter.java Course: 17655 Project: Assignment 1 Copyright:
@@ -26,7 +25,7 @@ public class AltitudeFilter extends FilterFramework {
 		// Next we write a message to the terminal to let the world know we are
 		// alive...
 
-		System.out.print("\n" + this.getName() + "::Middle Reading ");
+		System.out.print("\n" + this.getName() + "::Altitude Reading ");
 		
 		Field field=new Field();
 		try{
@@ -53,4 +52,4 @@ public class AltitudeFilter extends FilterFramework {
 
 	} // run
 
-} // MiddleFilter
+} // AltitudeFilter

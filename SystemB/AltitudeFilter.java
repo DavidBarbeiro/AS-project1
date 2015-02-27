@@ -1,5 +1,6 @@
-package system.A;
+package SystemB;
 
+import system.A.Field;
 import utils.FilterFramework;
 /******************************************************************************************************************
  * File:MiddleFilter.java Course: 17655 Project: Assignment 1 Copyright:
@@ -19,20 +20,22 @@ import utils.FilterFramework;
  *
  ******************************************************************************************************************/
 
-public class TemperatureFilter extends FilterFramework {
+public class AltitudeFilter extends FilterFramework {
 	public void run() {
 
 		// Next we write a message to the terminal to let the world know we are
 		// alive...
+
 		System.out.print("\n" + this.getName() + "::Middle Reading ");
+		
 		Field field=new Field();
 		try{
 			while (true) {
 				field.unmarshal(listPipeIn.get("SourceFilter"));
-				if(field.id==0 || field.id==4){
-					if(field.id==4){
+				if(field.id==0 || field.id==2){
+					if(field.id==2){
 						double measurement = Double.longBitsToDouble(field.measurement);
-						measurement = (measurement-32)/1.8;
+						measurement = measurement*0.3048;
 						field.measurement=Double.doubleToLongBits(measurement);
 					}
 					field.marshal(listPipeOut.get("SinkFilter"));
@@ -42,10 +45,11 @@ public class TemperatureFilter extends FilterFramework {
 		{
 			listPipeIn.get("SourceFilter").closePort();
 			listPipeOut.get("SinkFilter").closePort();
-			System.out.print("\n" + this.getName() + "::Temperature Exiting; bytes read: " 
+			System.out.print("\n" + this.getName() + "::Altitude Exiting; bytes read: " 
 			+ field.bytesread + " bytes written: " + field.byteswritten);
 
 		} // catch
+			
 
 	} // run
 

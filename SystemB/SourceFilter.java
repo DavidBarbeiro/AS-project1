@@ -1,4 +1,4 @@
-package system.A;
+package SystemB;
 
 /******************************************************************************************************************
  * File:SourceFilter.java
@@ -49,6 +49,8 @@ public class SourceFilter extends FilterFramework {
 				byteswritten++;
 				listPipeOut.get("AltitudeFilter").WriteFilterOutputPort(databyte);
 				byteswritten++;
+				listPipeOut.get("PressureFilter").WriteFilterOutputPort(databyte);
+				byteswritten++;
 			} //while
 
 		} // try
@@ -66,6 +68,7 @@ public class SourceFilter extends FilterFramework {
 				in.close();
 				listPipeOut.get("AltitudeFilter").closePort();
 				listPipeOut.get("TemperatureFilter").closePort();
+				listPipeOut.get("PressureFilter").closePort();
 				System.out.println("\n" + this.getName()
 						+ "::Read file complete, bytes read::" + bytesread
 						+ " bytes written: " + byteswritten);

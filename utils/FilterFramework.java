@@ -63,7 +63,7 @@ public class FilterFramework extends Thread {
 
 	public class PipeIn {
 
-		PipedInputStream inputReadPort =  new PipedInputStream();
+		PipedInputStream inputReadPort =  new PipedInputStream(6000);
 		// The following reference to a filter is used because java pipes are
 		// able to reliably
 		// detect broken pipes on the input port of the filter. This variable

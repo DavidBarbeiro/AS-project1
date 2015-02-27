@@ -1,10 +1,5 @@
-package system.A;
-
-
-
+package SystemB;
 import utils.FilterFramework;
-
-
 
 /******************************************************************************************************************
  * File:SinkFilter.java
@@ -58,8 +53,10 @@ public class SinkFilter extends FilterFramework {
 		
 		boolean temperatureFlag=true;
 		boolean altitudeFlag=true;
+		boolean pressureFlag=true;
 		Field temperatureField=new Field();
 		Field altitudeField=new Field();
+		Field pressureField=new Field();
 		String row="";
 		
 		while (true) {
@@ -79,19 +76,31 @@ public class SinkFilter extends FilterFramework {
 					listPipeIn.get("AltitudeFilter").closePort();
 				}
 			}
+			if( pressureFlag==true){
+				try {
+					pressureField.unmarshal(listPipeIn.get("PressureFilter"));
+				} catch (EndOfStreamException e) {
+					pressureFlag=false;
+					listPipeIn.get("PressureFilter").closePort();
+				}
+			}
 			
-			if(!temperatureFlag && !altitudeFlag){
+			if(!temperatureFlag && !altitudeFlag && !pressureFlag){
 				System.out.print( "\n" + this.getName() + "::Sink Exiting;" );
 				break;
 			}
 
-			if(temperatureField.id==0){
+			if(pressureField.id==0){
 				row="\n";
-				timeStamp.setTimeInMillis(temperatureField.measurement);
+				timeStamp.setTimeInMillis(pressureField.measurement);
 				row+="Timestamp: " + timeStampFormat.format(timeStamp.getTime());
 			}else{
 				row+=" temperature: "+ Double.longBitsToDouble(temperatureField.measurement);
 				row+=" altitude: " + Double.longBitsToDouble(altitudeField.measurement);
+				row+=" pressure: " + Double.longBitsToDouble(pressureField.measurement);
+				if(pressureField.id<0){
+					row+=" *";
+				}
 				System.out.println(row);
 			}
 
